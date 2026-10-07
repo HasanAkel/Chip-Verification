@@ -1,0 +1,15 @@
+The complete VeriBugBench tree is not stored inside this git repo.
+
+On each machine, scripts/setup_laptop.ps1 clones it to:
+
+    C:\cv\VeriBugBench
+
+and creates a junction:
+
+    third_party\VeriBugBench  ->  C:\cv\VeriBugBench
+
+Why a short path: some mutant paths exceed Windows' traditional 260-character
+limit when nested under Documents\Chip Verification.
+
+Always run VeriBugBench commands with --root C:\cv\VeriBugBench
+(or use . .\scripts\env.ps1, which does that for you).

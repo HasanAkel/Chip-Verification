@@ -1,0 +1,15 @@
+# Python dependencies for the masked-bug verification lab and VeriBugBench.
+# Install into a local virtualenv after cloning:
+#   python -m venv .venv
+#   .\.venv\Scripts\Activate.ps1
+#   python -m pip install -r requirements.txt
+#
+# VeriBugBench itself is installed editable from a sibling checkout
+# (see scripts/setup_laptop.ps1). Do not pin a PyPI package for it.
+
+PyYAML>=6.0,<7
+pyverilog==1.2.1
+numpy>=1.24
+pandas>=2.0
+pytest>=8
+requests>=2.31

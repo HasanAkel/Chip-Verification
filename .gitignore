@@ -1,0 +1,27 @@
+# Local Python env (recreate with scripts/setup_laptop.ps1)
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Simulation / framework work products
+lab/results/
+work/
+
+# Large local tool downloads (install separately)
+tools/gtkwave/
+tools/*.zip
+tools/*.tgz
+tools/*.tar.gz
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Do not commit a full VeriBugBench tree under third_party;
+# setup_laptop.ps1 creates a junction to C:\cv\VeriBugBench.
+third_party/VeriBugBench/
