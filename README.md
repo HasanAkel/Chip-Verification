@@ -1,6 +1,6 @@
 # Masked Bug Injection / Chip Verification Lab
 
-Owner: [@HasanAkel26](https://github.com/HasanAkel26)
+Owner: [@HasanAkel](https://github.com/HasanAkel)
 
 Research sandbox for **masked bug injection** into RTL, using
 [VeriBugBench](https://github.com/wndif/VeriBugBench) as the mutation /
@@ -78,8 +78,8 @@ counts, and the limits of that run are in
 
 ## Collaborators
 
-Repo owner: **HasanAkel26**. Teammates with write access: **Mohamed-Aaqib**,
-**salimakell**. Add more under Settings → Collaborators.
+Repo owner: **HasanAkel**. Teammates with write access: **Omar-ocorp**,
+**Mohamed-Aaqib**, **salimakell**. Add more under Settings → Collaborators.
 
 ## License / upstream
 
