@@ -68,6 +68,14 @@ veribugbench show first_counter_overflow
 | `starvation` | Upstream enable never reaches the bug site |
 | `masked_by_upstream_bug` | A second bug hides the first one's effect |
 
+## AXI masking experiment
+
+`lab/axi_mask_search.py strict` stacks VeriBugBench mutants on the OpenCores
+AXI interconnect, scores handshake traces plus SRAM dumps, and labels pairs
+whose joint output matches only one of the two bugs. Literature, measured
+counts, and the limits of that run are in
+[`docs/LITERATURE_AND_STATUS.md`](docs/LITERATURE_AND_STATUS.md).
+
 ## Collaborators
 
 Repo owner: **HasanAkel26**. Teammates with write access: **Mohamed-Aaqib**,
