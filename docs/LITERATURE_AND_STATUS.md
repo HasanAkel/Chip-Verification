@@ -57,6 +57,59 @@ apply it to RTL.
 
 ## Who already talks about masked bugs
 
+The grounding, strongest first:
+
+**1. Safety standards require exactly this kind of analysis.** ISO 26262-5:2018
+(road vehicles, functional safety, hardware) clause 7.4.3.2 requires that, for
+ASIL B–D, safety analyses identify single-point, residual, and
+**multiple-point** faults — a fault that only violates the safety goal *in
+combination with another independent fault*. The note says dual-point analysis
+normally suffices, and explicitly names the case of "the combination of two
+faults where one fault affects a safety-related element and another fault
+affects the corresponding safety mechanism" — that is our masked-by-upstream-bug
+case, written into law. Latent-fault metrics (LFM) and PMHF calculations depend
+on classifying these pairs correctly. ISO 26262-11:2018 extends this to
+semiconductors and recommends fault-injection simulation with fault models.
+ISO 26262-10:2018 clause 8.1 defines the dual-point fault taxonomy formally.
+Nobody's tooling does the RTL-mutant version of this exhaustively — that gap is
+what this lab measures.
+
+**2. Commercial EDA tools exist for the single-fault version.** Synopsys
+Testbench Quality Assurance (formerly Certitude) is an industry product that
+injects systematic faults into RTL, runs the existing testbench, and reports
+activation/propagation/detection per fault. Its datasheet says it provides
+"evidence-based verification quality analysis for ISO 26262 Part 8-9
+assessments." It is one-fault-at-a-time. Cadence JasperGold FSV App does the
+same via formal propagation instead of simulation. Fault simulation (Synopsys
+Z01X) is a real industrial workload. This proves the single-fault question has
+a paying market and a regulatory reason to exist.
+
+**3. The double-fault software analogue is small but real.** "An insight of
+double-faults interactions in program: An empirical study" (fault injection on
+Siemens suites) found: two faults interfere less than 1% of the time, masking
+is more common than constructive interaction, and interference concentrates on
+pairs touching the same variable. That study is exactly our experimental design,
+transplanted to C. Nobody appears to have published the hardware analogue.
+
+**4. Reliability work says independence is unsafe to assume.** "Scalable
+Reliability Assessment of DNNs through Simultaneous Fault Injection" (2024)
+found that in densely connected DNNs, simultaneously-injected faults interact
+enough to create artificial masking — false negatives — and proposes mitigation.
+The explicit warning is: do not treat simultaneous faults as independent. Our
+AXI results are a hardware instance of that warning (3,472 of 7,675 pairs
+produced signatures neither member produced alone).
+
+**5. Post-silicon masking analysis exists.** BugMAPI (Lee, Kolan,
+Morgenshtein, Sokhin, Morad, Ziv, Bertacco — University of Michigan and IBM,
+DAC 2016) estimates the probability that a bug in a post-silicon test program
+is never observed by the end-of-test checkers. Static analysis of instruction
+streams, ~77% of the accuracy of dynamic fault injection at ~1000x less time.
+Closest published relative to this lab; still one-fault, instruction-level.
+
+**6. Functional qualification practice.** The DVCon talk "Who's Watching the
+Watchmen" and tools like Certitude formalized the warning that a testbench bug
+can mask an RTL bug. The experiment remains single-fault.
+
 Closest published relatives, and how they differ from this lab:
 
 - Doowon Lee, Tom Kolan, Arkadiy Morgenshtein, Vitali Sokhin, Ronny Morad,
@@ -69,6 +122,19 @@ Closest published relatives, and how they differ from this lab:
   information-flow analysis of instructions (Power and Alpha), not a
   simulation of two RTL edits at once. They report about 77% of the
   accuracy of injecting bugs and simulating, at roughly 1000x less time.
+
+- "An insight of double-faults interactions in program: An empirical study."
+  Fault-injection study on Siemens C suites. Two faults interfere in under
+  1% of pairs; masking dominates construction; interference clusters on
+  pairs sharing a variable. This is the software version of our pairwise
+  design; the hardware version is not in the literature we found.
+
+- "Scalable Reliability Assessment of DNNs through Simultaneous Fault
+  Injection" (2024). Injecting many faults at once to speed up reliability
+  campaigns is only valid if faults do not interact. In dense DNNs they do,
+  producing false "masked" verdicts, so the paper adds an interaction-aware
+  correction. Directly relevant: our AXI pair sweep is the RTL analogue,
+  and it found plenty of interaction.
 
 - Functional qualification (the DVCon talk "Who's Watching the Watchmen,"
   and commercial tools such as Certitude) inserts one artificial fault and
@@ -89,6 +155,69 @@ on the same test, and counts a bug as masked when the joint output equals
 exactly one of the two single-bug outputs. BugMAPI is the nearest idea.
 It targets instruction streams after silicon, and it predicts masking
 instead of measuring it by running both bugs.
+
+## Who to contact for grounding or collaboration
+
+The goal is one of two replies: "yes, this matters, here is the industrial
+form of it," or "this exists in group X's work, here is the paper."
+
+**BugMAPI authors (closest prior work).**
+- Valeria Bertacco, University of Michigan — <bertacco@umich.edu>. Leads the
+  Michigan EECS verification group; co-authored BugMAPI and a long line of
+  fault-injection/validation work.
+- Doowon Lee, now at Samsung AI; first author of BugMAPI.
+Ask: whether pairwise RTL-mutant masking has been studied in their group,
+and whether an Icarus-based open pipeline is of interest as a teaching or
+benchmark artifact.
+
+**MANTRA / VeriBugBench authors (our mutant source).**
+- Jiang Wu / Xiaoguang Mao, National University of Defense Technology.
+  Contact via the repository issues at <https://github.com/wndif/VeriBugBench>.
+Ask: (a) confirm the arXiv paper's TCAD status, (b) point to any multi-fault
+retention experiments they deliberately excluded, (c) interest in pairwise
+masking as a v2 benchmark axis. As the maintainers of the benchmark we use,
+they are the single most relevant group.
+
+**ISO 26262 practitioners (the regulatory demand side).**
+- Synopsys Testbench Quality Assurance / Cadence Safety Solutions teams —
+  via their verification consulting pages. Practitioners answer concrete
+  questions like "does dual-point fault analysis ever get done by RTL
+  simulation campaigns rather than FMEA-style spreadsheets?" Ask that exact
+  question.
+
+**Test-selection groups (the regression-cost side).**
+- Rongjian Liang or Brucek Khailany (NVIDIA research), via the DAC 2023
+  publication page. Ask whether coverage-based test selection has ever been
+  validated against *masked-bug* ground truth rather than coverage alone.
+
+**Closer to home.** A professor of digital-design verification at a local
+university (Lebanese University, AUB, LAU) can read one page and say
+whether the framing is sound, which is the cheapest way to get an honest
+first signal.
+
+Email template:
+
+> Subject: Is pairwise RTL bug masking a studied problem?
+>
+> Hi Professor <name>,
+>
+> I am an independent researcher working on a simulation experiment that
+> injects pairs of RTL mutations (from VeriBugBench/MANTRA) into an AXI
+> interconnect and checks, for each pair, whether the joint simulation
+> output matches exactly one of the two single-fault outputs. When it does,
+> one bug is masked by the other. In a recent run, 3,472 of 7,675 pairs
+> produced an output neither bug produced alone.
+>
+> I am trying to find prior work on pairwise/multi-fault masking for RTL
+> and on whether this can ground test-selection decisions. ISO 26262-5
+> requires dual-point fault analysis, but I have not found an RTL
+> simulation campaign implementing it at mutant granularity.
+>
+> Is this a studied problem I have missed? If not, do you think a
+> measurement of pairwise masking rates at RTL level would be a
+> publishable/usable contribution?
+>
+> Repo: <https://github.com/HasanAkel/Chip-Verification>
 
 ## What this repo has actually measured
 
