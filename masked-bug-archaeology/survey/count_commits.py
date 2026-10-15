@@ -54,13 +54,30 @@ class Commit:
         return any(p.search(self.subject) for p in FIX_PATTERNS)
 
 
-def git(repo: Path, *args: str) -> str:
-    return subprocess.run(
-        ["git", "-C", str(repo), "-c", "core.longpaths=true", *args],
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout
+def git(repo: Path, *args: str, retries: int = 3) -> str:
+    last_err: subprocess.CalledProcessError | None = None
+    for attempt in range(retries):
+        try:
+            return subprocess.run(
+                ["git", "-C", str(repo), "-c", "core.longpaths=true", *args],
+                capture_output=True,
+                text=True,
+                check=True,
+            ).stdout
+        except subprocess.CalledProcessError as exc:
+            last_err = exc
+            # Transient failures happen when another git process holds locks
+            # or a lazy blob fetch hiccups in partial clones. Back off, retry.
+            wait = 2**attempt
+            print(
+                f"git {' '.join(args[:2])}... failed (exit {exc.returncode}), "
+                f"retrying in {wait}s ({attempt + 1}/{retries})",
+                file=sys.stderr,
+            )
+            import time
+
+            time.sleep(wait)
+    raise last_err  # type: ignore[misc]
 
 
 def load_commits(repo: Path, block: str) -> list[Commit]:
