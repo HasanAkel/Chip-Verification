@@ -1,0 +1,9 @@
+# Simulation products and heavy work trees (not committed)
+masked-bug-archaeology/work/
+opentitan-work/
+*.vvp
+*.vcd
+
+# Python
+__pycache__/
+*.pyc

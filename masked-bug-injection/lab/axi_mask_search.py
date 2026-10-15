@@ -33,7 +33,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[2]  # repo root (lab/ now sits one level deeper)
 BENCH = Path(
     r"C:\cv\VeriBugBench\dataset\v1.0\sources\Native\opencores"
     r"\addition\verilog_axi-interconnect\testbench"

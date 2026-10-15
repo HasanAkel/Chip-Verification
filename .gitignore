@@ -6,7 +6,7 @@ __pycache__/
 .pytest_cache/
 
 # Simulation / framework work products
-lab/results/
+masked-bug-injection/lab/results/
 work/
 
 # Large local tool downloads (install separately)

@@ -22,7 +22,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]  # repo root (lab/ now sits one level deeper)
 LAB = Path(__file__).resolve().parent
 RTL = LAB / "rtl" / "pipe.v"
 TB = LAB / "tb" / "tb_pipe.v"

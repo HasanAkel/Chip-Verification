@@ -38,3 +38,4 @@ Write-Host "python:   $((Get-Command python -ErrorAction SilentlyContinue).Sourc
 Write-Host "VeriBugBench: $env:VERIBUGBENCH_ROOT"
 Write-Host "This window can run iverilog, vvp, gtkwave, python, and veribugbench."
 Write-Host "veribugbench is a function here, so it always uses --root $env:VERIBUGBENCH_ROOT."
+Write-Host "Masked-bug lab:  python masked-bug-injection\lab\run_lab.py"

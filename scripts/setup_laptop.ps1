@@ -87,5 +87,5 @@ if (Test-Path $link) {
 Write-Host ""
 Write-Host "Setup done. In every new terminal:"
 Write-Host "  . .\scripts\env.ps1"
-Write-Host "  python lab\check_env.py"
-Write-Host "  python lab\run_lab.py"
+Write-Host "  python masked-bug-injection\lab\check_env.py"
+Write-Host "  python masked-bug-injection\lab\run_lab.py"
