@@ -50,3 +50,9 @@ work/                   simulation products (not committed)
 ## Status
 
 Phase 0 (scoping). See `docs/RESEARCH_PLAN.md` for the active phase.
+
+The project's research statement — the full literature-grounded case for
+masked-bug archaeology, the per-regression-cycle evidence base, the
+regression workflow, and our falsifiable predictions — is in
+[`DELIVERABLES.md`](DELIVERABLES.md) (2026-10-18); the per-cycle study
+stands alone in [`docs/BUGS_PER_REGRESSION.md`](docs/BUGS_PER_REGRESSION.md).
