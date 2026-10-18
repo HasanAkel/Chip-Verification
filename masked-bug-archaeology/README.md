@@ -56,3 +56,11 @@ masked-bug archaeology, the per-regression-cycle evidence base, the
 regression workflow, and our falsifiable predictions — is in
 [`DELIVERABLES.md`](DELIVERABLES.md) (2026-10-18); the per-cycle study
 stands alone in [`docs/BUGS_PER_REGRESSION.md`](docs/BUGS_PER_REGRESSION.md).
+
+**Future work:** a proposed mutation-operator fidelity study — do the
+VeriBugBench/MANTRA operators reproduce OpenTitan's *real* bug fixes
+(replicability), do synthetic mutants match real-bug failure behavior
+(realism), and do operator frequencies match real bug-category frequencies
+(distribution match)? — is specified in
+[`docs/FUTURE_WORK.md`](docs/FUTURE_WORK.md). It validates (or retires) the
+fault model shared with the sibling `../masked-bug-injection/` track.
