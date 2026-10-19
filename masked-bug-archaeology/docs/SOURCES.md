@@ -95,8 +95,19 @@ methodology, numbers, and limitations are in `METHODOLOGY.md` §2–§3.
   containment; same-method proximity.
 
 **Masking measurement discipline**
-- Diniz et al., ISSRE 2023.
-  <https://doi.org/10.1109/ISSRE48739.2023.00023>
+- Diniz, Ferreira, Ferrari & Figueiredo, "Do Mutations of Strongly
+  Subsuming Second-Order Mutants Really Mask Each Other?", Proc. IEEE
+  34th International Symposium on Software Reliability Engineering
+  (ISSRE 2023), Florence, pp. 114-124.
+  <https://doi.org/10.1109/ISSRE59848.2023.00079> (preprint:
+  <https://labsoft-ufmg.github.io/publications/2023/issre2023preprint.pdf>)
+  Lab: LabSoft, Universidade Federal de Minas Gerais (UFMG), Brazil;
+  last author Eduardo Figueiredo heads LabSoft (PhD Lancaster), and the
+  group co-published "Efficiently finding higher-order mutants" at
+  ESEC/FSE 2020 with CMU's Kästner group. Venue standing: CORE Rank A;
+  2023 acceptance rate 28% (70/247, per the proceedings' Program
+  Co-Chairs' foreword). Caveat: recent and so far nearly uncited
+  (~1 citation per Crossref/OpenAlex).
   Reachmax/Reachmin audit of claimed masking: only 53.5% of subtle
   2-order pairs show possible masking; 43.5% never execute one
   mutation (stimulus artifacts, not interaction).
@@ -188,3 +199,85 @@ methodology, numbers, and limitations are in `METHODOLOGY.md` §2–§3.
   <https://github.com/openhwgroup/cva6>
 - OpenSPARC T1 (2006, historical): full RTL + verification suite of a
   shipping chip, pre-UVM methodology.
+
+## ML that predicts masked/hidden bugs (state of the art, 2026-10)
+
+**Finding: no direct prior exists.** After extensive search — query shapes
+used: "predict masked bugs machine learning", "fault interaction prediction
+ML", "predict residual defects after fault", "latent fault prediction
+software", "multiple fault prediction ML", "masked fault detection neural",
+"predicting mutant killability", "mutant selection machine learning ICSE" —
+NO published model exists that predicts whether a specific bug is
+masked/hidden by another bug from found-bug/test-suite evidence. This is an
+open gap — and the direct target for any future "masked-bug detector" built
+on our measurements.
+
+**Two families of false friends — do NOT miscite:**
+- LLM "masked-token" papers (e.g. ANVIL, arXiv:2408.16028) — "masked code"
+  there is an MLM input operation, unrelated to bug masking.
+- Generic defect prediction — predicts WHERE bugs are, assumes nothing
+  about masking.
+
+**Nearest neighbors (all primary-verified 2026-10-19):**
+
+*Closest "masking prediction" — Squeeziness / Failed Error Propagation line*
+- Ibias & Núñez, "Estimating fault masking using Squeeziness based on
+  Rényi's entropy", ACM SAC 2020. <https://doi.org/10.1145/3341105.3373920>
+  (predicts fault-masking probability as a system property, not bug
+  instances).
+- Arasteh, Arasteh & Ghaffari, J. Supercomputing 2025.
+  <https://doi.org/10.1007/s11227-025-07219-5> (an MLP classifying
+  fault-masking vs fault-propagating instructions before test generation).
+
+*Mutant-utility ML*
+- MuDelta — Ma, Chekam, Papadakis, Harman, ICSE 2021.
+  <https://doi.org/10.1109/ICSE43902.2021.00086> (ML picks commit-relevant
+  mutants; precision: it predicts commit-relevant mutants, not collateral
+  kills).
+- Chekam, Papadakis, Bissyandé, Le Traon, "Predicting the fault revelation
+  utility of mutants", ICSE'18 Companion.
+  <https://doi.org/10.1145/3183440.3195031>
+- Predictive Mutation Testing, IEEE TSE 2019.
+  <https://doi.org/10.1109/TSE.2018.2809496>
+- Cerebro static subsuming-mutant selection, IEEE TSE 2022.
+  <https://doi.org/10.1109/TSE.2022.3140510>
+- Just et al., TCAP mutant prioritization, ICSE 2022.
+  <https://homes.cs.washington.edu/~rjust/publ/prioritizing_mutants_tcap_icse_2022.pdf>
+
+*Defect prediction canon*
+- Hall et al., TSE 2012 systematic review.
+  <https://doi.org/10.1109/TSE.2011.103>
+- Kamei et al., just-in-time QA, TSE 2013. <https://doi.org/10.1109/TSE.2012.70>
+- Kim et al., "Classifying Software Changes: Clean or Buggy?", TSE 2008.
+  <https://doi.org/10.1109/TSE.2007.70773> (literally uses "latent software
+  bugs" language via change classification).
+
+*Interaction statistics (training-prior sources)*
+- Kuhn, Wallace & Gallo, TSE 2004. <https://doi.org/10.1109/TSE.2004.24>
+  (FTFI: 67.5% 1-way, 93.3% ≤2, 98.8% ≤3, 100% ≤4; dataset:
+  <https://csrc.nist.rip/groups/SNS/acts/ftfi.html>).
+- ICRSE 2017 double-fault interference.
+  <https://doi.org/10.1109/ICRSE.2017.8030752> (<1% interference,
+  masking > construction, NON-random — "always involve the same variable").
+- Digiuseppe & Jones, ICSM 2011. <https://doi.org/10.1109/ICSM.2011.6080767>
+  (faults obscuring other faults = most prevalent multi-fault effect).
+- Debroy & Wong, ISSRE 2009. <https://doi.org/10.1109/ISSRE.2009.14>
+
+*Test-order masking*
+- Zhang et al., "Empirically revisiting the test independence assumption",
+  ISSTA 2014. <https://doi.org/10.1145/2610384.2610404> — quote-worthy:
+  "One bug in the Apache CLI library was masked by two dependent tests for
+  3 years".
+
+*Theory anchors*
+- How Tai Wah, "A theoretical study of fault coupling", STVR 2000.
+  DOI 10.1002/(SICI)1099-1689(200003)10:1<3::AID-STVR196>3.0.CO;2-P
+- Gopinath, Jensen & Groce, "The Theory of Composite Faults", ICST 2017.
+  <https://doi.org/10.1109/ICST.2017.12>
+
+**Why this matters for us:** the gap — predicting masked bug *instances*
+from found-bug evidence plus interaction locality, reachability-audited —
+is exactly what a follow-up "masked-bug detector" paper would fill, using
+our archaeology numbers as ground truth/training data. The locality
+structure documented by Kuhn et al. 2004 and the ICRSE 2017 double-fault
+study is the feature prior such a detector would learn from.

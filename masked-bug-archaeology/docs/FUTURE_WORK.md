@@ -313,3 +313,7 @@ operator coverage — and neither implies the other.
 - **Gay & Salahirad, ICST 2023** and **Hans, Kettl & Winter, EASE 2025** —
   see "Novelty check" above; the software state of the art this proposal
   extends to RTL.
+
+For the ML-for-masked-bugs state of the art (verified 2026-10-19: no direct
+prior exists — the nearest neighbors and the open gap are catalogued in
+[SOURCES.md](SOURCES.md), section "ML that predicts masked/hidden bugs").

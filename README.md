@@ -65,7 +65,7 @@ Key grounding, full citations in
 | --- | --- |
 | 1-order-adequate tests still kill 94–99% of 2-order mutants (the license for single-bug replay) | [Offutt, TOSEM 1992](https://doi.org/10.1145/125489.125473) |
 | 17% of real faults couple to *no* mutant — real bugs ≠ mutants | [Just et al., FSE 2014](https://doi.org/10.1145/2635868.2635929) |
-| 43.5% of "subtle" fault pairs never execute both members — masking audits need reachability checks | [Diniz et al., ISSRE 2023](https://doi.org/10.1109/ISSRE48739.2023.00023) |
+| 43.5% of "subtle" fault pairs never execute both members — masking audits need reachability checks | [Diniz et al., ISSRE 2023](https://doi.org/10.1109/ISSRE59848.2023.00079) |
 | Real-system interactions: 93.3% of failures ≤2 conditions, 100% ≤4 (the prior we test in RTL) | [Kuhn et al., TSE 2004](https://doi.org/10.1109/TSE.2004.24) |
 | >40% of 2,563 real CPU errata need combined triggers | [RemembERR, MICRO 2022](https://comsec-files.ethz.ch/papers/rememberr_micro22.pdf) |
 | Bug masking is estimable: 77% accuracy at 1000x speedup (post-silicon, single bug) | [BugMAPI, DAC 2016](https://doi.org/10.1145/2897937.2898072) |

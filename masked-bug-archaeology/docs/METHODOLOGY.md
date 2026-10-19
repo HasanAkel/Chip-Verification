@@ -136,7 +136,7 @@ Software Testing?" FSE 2014.** <https://doi.org/10.1145/2635868.2635929>
 
 **Diniz et al., "Do Mutations of Strongly Subsuming Second-Order
 Mutants Really Mask Each Other?" ISSRE 2023.**
-<https://doi.org/10.1109/ISSRE48739.2023.00023>
+<https://doi.org/10.1109/ISSRE59848.2023.00079>
 
 - *Method:* the only paper that *audits* claimed masking. For each
   subtle 2-order mutant, analyze whether the killing tests actually

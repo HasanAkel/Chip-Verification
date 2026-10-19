@@ -466,11 +466,11 @@ Numbered; grouped. All URLs/DOIs verified against primary sources
 - [4] A. J. Offutt, "Investigations of the Software Testing Coupling
   Effect," *ACM TOSEM* 1(2), 1992. 1-order-adequate tests kill 94–99% of
   2nd/3rd-order mutants. <https://doi.org/10.1145/125489.125473>
-- [10] J. P. Diniz, F. Ferreira, F. Ferrari, A. B. Vieira, M. A. G. Viggio,
-  P. D. L. Machado, R. Abreu, "Do Mutations of Strongly Subsuming
-  Second-Order Mutants Really Mask Each Other?" Proc. IEEE ISSRE 2023.
+- [10] J. P. Diniz, F. Ferreira, F. Ferrari, E. Figueiredo, "Do Mutations
+  of Strongly Subsuming Second-Order Mutants Really Mask Each Other?"
+  Proc. IEEE ISSRE 2023.
   53.52% Reachmax / 43.47% Reachmin / 3.01% Reachint.
-  <https://doi.org/10.1109/ISSRE48739.2023.00023> (preprint:
+  <https://doi.org/10.1109/ISSRE59848.2023.00079> (preprint:
   <https://labsoft-ufmg.github.io/publications/2023/issre2023preprint.pdf>)
 - [12] Y. Jia and M. Harman, "Higher Order Mutation Testing," *Information
   and Software Technology* 51(10), 2009. Taxonomy: expected / worsening /
